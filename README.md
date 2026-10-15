@@ -1,17 +1,23 @@
 # Git Submodule Update
 
-VS Code extension that adds two buttons to the **Source Control** view title bar for updating git submodules.
+VS Code extension that adds git submodule update actions to the **Source Control** view:
 
-| Button | Command | Runs |
+- Toolbar buttons and a **Submodules** submenu in the `…` menu for updating **all** submodules
+- A **Submodules** list in the Source Control sidebar with **each submodule by name**, plus Init / Remote actions per row
+
+> VS Code does not allow extensions to inject dynamic entries into the `…` menu (menu contributions are fixed in `package.json`). Per-submodule actions therefore live in the sidebar list, where names can update with the repo.
+
+| Action | Where | Runs |
 | --- | --- | --- |
-| Clone icon | `Git: Submodules Init` | `git submodule update --init --recursive` |
-| Cloud icon | `Git: Submodules Remote` | `git submodule update --remote --recursive` |
+| Init All | Toolbar / `…` → Submodules / view title | `git submodule update --init --recursive` |
+| Remote All | Toolbar / `…` → Submodules / view title | `git submodule update --remote --recursive` |
+| Init / Remote | Inline (or context menu) on a submodule row | same flags, for that submodule path only |
 
 ![Submodules Init button](docs/submodules-init.png)
 
 ![Submodules Remote button](docs/submodules-remote.png)
 
-Both commands are also available from the Command Palette. The command runs in the root of the repository the button belongs to (falls back to the first workspace folder), shows progress in the Source Control view and reports success or the git error as a notification.
+Commands are also available from the Command Palette under **Git Submodules**. Each command runs in the root of the repository the action belongs to (falls back to the first workspace folder), shows progress in the Source Control view, and reports success or the git error as a notification.
 
 ## Requirements
 

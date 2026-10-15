@@ -1,7 +1,7 @@
 {
   "name": "git-submodule-update",
   "displayName": "Git Submodule Update",
-  "description": "Adds buttons to the Source Control view for git submodule update (--init and --remote).",
+  "description": "Adds Source Control toolbar buttons, a Submodules submenu, and a per-submodule list for git submodule update (--init/--remote).",
   "version": "1.1.0",
   "publisher": "at-besa",
   "icon": "images/icon.png",
@@ -31,13 +31,48 @@
     "commands": [
       {
         "command": "submoduleUpdate.init",
-        "title": "Git: Submodules Init (update --init --recursive)",
+        "title": "Init All",
+        "category": "Git Submodules",
         "icon": "$(repo-clone)"
       },
       {
         "command": "submoduleUpdate.remote",
-        "title": "Git: Submodules Remote (update --remote --recursive)",
+        "title": "Remote All",
+        "category": "Git Submodules",
         "icon": "$(cloud-download)"
+      },
+      {
+        "command": "submoduleUpdate.initOne",
+        "title": "Init",
+        "category": "Git Submodules",
+        "icon": "$(repo-clone)"
+      },
+      {
+        "command": "submoduleUpdate.remoteOne",
+        "title": "Remote",
+        "category": "Git Submodules",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "submoduleUpdate.refreshView",
+        "title": "Refresh",
+        "category": "Git Submodules",
+        "icon": "$(refresh)"
+      }
+    ],
+    "views": {
+      "scm": [
+        {
+          "id": "submoduleUpdate.view",
+          "name": "Submodules",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "submoduleUpdate.submenu",
+        "label": "Submodules"
       }
     ],
     "menus": {
@@ -51,6 +86,60 @@
           "command": "submoduleUpdate.remote",
           "when": "scmProvider == git",
           "group": "navigation"
+        },
+        {
+          "submenu": "submoduleUpdate.submenu",
+          "when": "scmProvider == git",
+          "group": "2_main@9"
+        }
+      ],
+      "submoduleUpdate.submenu": [
+        {
+          "command": "submoduleUpdate.init",
+          "group": "1_update@1"
+        },
+        {
+          "command": "submoduleUpdate.remote",
+          "group": "1_update@2"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "submoduleUpdate.refreshView",
+          "when": "view == submoduleUpdate.view",
+          "group": "navigation@1"
+        },
+        {
+          "command": "submoduleUpdate.init",
+          "when": "view == submoduleUpdate.view",
+          "group": "navigation@2"
+        },
+        {
+          "command": "submoduleUpdate.remote",
+          "when": "view == submoduleUpdate.view",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "submoduleUpdate.initOne",
+          "when": "view == submoduleUpdate.view && viewItem == submodule",
+          "group": "inline@1"
+        },
+        {
+          "command": "submoduleUpdate.remoteOne",
+          "when": "view == submoduleUpdate.view && viewItem == submodule",
+          "group": "inline@2"
+        },
+        {
+          "command": "submoduleUpdate.initOne",
+          "when": "view == submoduleUpdate.view && viewItem == submodule",
+          "group": "1_actions@1"
+        },
+        {
+          "command": "submoduleUpdate.remoteOne",
+          "when": "view == submoduleUpdate.view && viewItem == submodule",
+          "group": "1_actions@2"
         }
       ]
     }
